@@ -282,4 +282,27 @@ git push -u origin main
 
 ---
 
+## Docker Usage
+
+You can build and run this automation framework in a reproducible Docker environment.
+
+### Build the Docker image
+```sh
+docker build -t playwright-automation .
+```
+
+### Run tests inside the container and export reports
+```sh
+docker run --rm -v %cd%/playwright-report:/app/playwright-report -v %cd%/coverage:/app/coverage playwright-automation
+```
+- On Linux/macOS, use `$(pwd)` instead of `%cd%`:
+  ```sh
+  docker run --rm -v $(pwd)/playwright-report:/app/playwright-report -v $(pwd)/coverage:/app/coverage playwright-automation
+  ```
+
+- The `-v` flags mount the `playwright-report` and `coverage` folders from the container to your host, so you can view the HTML and coverage reports after the run.
+- After the container finishes, open `playwright-report/index.html` and `coverage/lcov-report/index.html` in your browser to view the results.
+
+---
+
 For any questions or improvements, feel free to open an issue or pull request.
