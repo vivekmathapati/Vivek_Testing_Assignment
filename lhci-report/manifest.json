@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://evinova.com/",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\Users\\vmathapa\\workspace\\Evinova\\Vivek_Assignment\\lhci-report\\evinova_com--2025_08_24_16_29_54.report.html",
+    "jsonPath": "C:\\Users\\vmathapa\\workspace\\Evinova\\Vivek_Assignment\\lhci-report\\evinova_com--2025_08_24_16_29_54.report.json",
+    "summary": {
+      "performance": 0.43,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://evinova.com/",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\Users\\vmathapa\\workspace\\Evinova\\Vivek_Assignment\\lhci-report\\evinova_com--2025_08_24_16_30_17.report.html",
+    "jsonPath": "C:\\Users\\vmathapa\\workspace\\Evinova\\Vivek_Assignment\\lhci-report\\evinova_com--2025_08_24_16_30_17.report.json",
+    "summary": {
+      "performance": 0.49,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://evinova.com/",
+    "isRepresentativeRun": true,
+    "htmlPath": "C:\\Users\\vmathapa\\workspace\\Evinova\\Vivek_Assignment\\lhci-report\\evinova_com--2025_08_24_16_30_37.report.html",
+    "jsonPath": "C:\\Users\\vmathapa\\workspace\\Evinova\\Vivek_Assignment\\lhci-report\\evinova_com--2025_08_24_16_30_37.report.json",
+    "summary": {
+      "performance": 0.46,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  }
+]

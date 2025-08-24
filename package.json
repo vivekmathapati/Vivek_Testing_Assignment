@@ -16,14 +16,19 @@
   "description": "Node.js Playwright Test Automation Framework using Page Object Model",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test",
+  "test": "playwright test",
+  "lhci:run": "lhci autorun",
     "k6:run": "k6 run load-tests/get-users.k6.js --summary-export=load-tests/summary.json",
     "k6:report": "node load-tests/generate-k6-html-report.js"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.44.0",
+    "axe-core": "^4.10.3",
+    "axe-playwright": "^2.1.0",
     "jest-html-reporter": "^4.3.0",
     "k6-html-reporter": "^1.0.5"
   },

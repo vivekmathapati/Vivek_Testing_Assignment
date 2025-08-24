@@ -44,6 +44,21 @@ Follow instructions at: https://k6.io/docs/getting-started/installation/
 npm install --save-dev k6-html-reporter
 ```
 
+### Install axe-playwright (for accessibility testing)
+```sh
+npm install --save-dev axe-playwright
+```
+
+### Install Faker.js (for dynamic test data)
+```sh
+npm install --save-dev @faker-js/faker
+```
+
+### Install Lighthouse CI (for performance metrics)
+```sh
+npm install --save-dev @lhci/cli
+```
+
 ## Project Structure
 - `pages/` - Playwright Page Object classes
 - `tests/` - Playwright UI test cases
@@ -105,6 +120,135 @@ This creates `load-tests/report.html` with a visual summary of the load test. Op
 
 ---
 
+## Accessibility Testing (axe-playwright)
+
+Accessibility checks are integrated into Playwright UI tests using [axe-playwright](https://www.npmjs.com/package/axe-playwright).
+
+- The test file `tests/accessibility.spec.js` runs an accessibility audit on https://evinova.com/ and fails if violations are found.
+- The test uses the axe-core engine for industry-standard accessibility rules.
+
+**Run the accessibility test:**
+```sh
+npx playwright test tests/accessibility.spec.js
+```
+- Review the test output for any accessibility violations and details.
+
+---
+
+## Visual Regression Testing (Playwright)
+
+Visual regression testing is supported using Playwright's built-in screenshot comparison.
+
+- Example test: `tests/visual.spec.js` takes a snapshot of https://evinova.com/ and compares it to a baseline image.
+- Baseline images are stored in `tests/visual.spec.js-snapshots/`.
+
+**Run the visual regression test:**
+```sh
+npx playwright test tests/visual.spec.js
+```
+- On the first run, a baseline image is created. On subsequent runs, Playwright will compare screenshots and report any visual differences.
+
+---
+
+## Code Coverage
+
+### API/Backend Tests (Jest/Frisby)
+Jest provides built-in code coverage reporting for your API tests.
+
+**Run API tests with coverage:**
+```sh
+npx jest --coverage
+```
+- This generates a `coverage/` folder with HTML and summary reports.
+- Open `coverage/lcov-report/index.html` in your browser for a detailed report.
+
+### Frontend/UI Tests (Playwright)
+Playwright can collect browser-side JavaScript coverage, but you must instrument your frontend code (if you have a frontend app) with a tool like Istanbul/nyc.
+
+**For frontend apps (React, Angular, etc.):**
+- Use your framework's coverage command (e.g., `react-scripts test --coverage` for Create React App).
+
+**For Playwright browser JS coverage:**
+- Instrument your frontend code with Istanbul/nyc.
+- Use Playwright's [coverage API](https://playwright.dev/docs/coverage) in your tests:
+
+```js
+await page.coverage.startJSCoverage();
+// ... run your test steps ...
+const coverage = await page.coverage.stopJSCoverage();
+// Save or process coverage data
+```
+- Merge and report using Istanbul/nyc for HTML output.
+
+**Sample Playwright test to save browser JS coverage:**
+Create a file like `tests/browser-coverage.spec.js`:
+
+```js
+const { test, expect } = require('@playwright/test');
+const fs = require('fs');
+
+test('Collect and save browser JS coverage', async ({ page }) => {
+  await page.coverage.startJSCoverage();
+  await page.goto('http://localhost:3000'); // Update to your app URL
+  // ... your test steps ...
+  await expect(page).toHaveTitle(/your app/i);
+  const coverage = await page.coverage.stopJSCoverage();
+  if (!fs.existsSync('coverage')) {
+    fs.mkdirSync('coverage');
+  }
+  fs.writeFileSync('coverage/browser-coverage.json', JSON.stringify(coverage, null, 2));
+  console.log('Browser JS coverage saved to coverage/browser-coverage.json');
+});
+```
+- After running this test, process the `coverage/browser-coverage.json` with Istanbul/nyc or a compatible tool to generate an HTML report.
+
+> Note: Playwright does not provide code coverage for test files themselves, only for code running in the browser context.
+
+---
+
+## Dynamic Test Data Generation (Faker.js)
+
+[Faker.js](https://www.npmjs.com/package/@faker-js/faker) is used to generate random, realistic test data for API tests.
+
+- Example usage: The test file `api-tests/users.spec.js` includes a POST test that creates a user with a random name and job title on each run.
+
+**Install Faker.js:**
+```sh
+npm install --save-dev @faker-js/faker
+```
+
+**Sample usage in a test:**
+```js
+const { faker } = require('@faker-js/faker');
+const body = {
+  name: faker.name.firstName(),
+  job: faker.name.jobTitle()
+};
+```
+- This helps ensure your API can handle a variety of input data and improves test coverage.
+
+---
+
+## Performance Metrics (Lighthouse CI)
+
+Lighthouse CI is used to collect and assert performance metrics for UI tests.
+
+- The configuration file `lighthouserc.json` specifies the URLs to audit and performance thresholds.
+- Reports are generated in the `lhci-report/` directory.
+
+
+**Install Lighthouse CI:**
+```sh
+npm install --save-dev @lhci/cli
+```
+**Run Lighthouse CI:**
+```sh
+npm run lhci:run
+```
+- You can adjust the URLs and thresholds in `lighthouserc.json` as needed.
+
+---
+
 ## Toolchain
 - [@playwright/test](https://playwright.dev/)
 - [frisby](https://docs.frisbyjs.com/)
@@ -113,6 +257,9 @@ This creates `load-tests/report.html` with a visual summary of the load test. Op
 - [k6](https://k6.io/)
 - [k6-html-reporter](https://www.npmjs.com/package/k6-html-reporter)
 - [jest-html-reporter](https://www.npmjs.com/package/jest-html-reporter)
+- [axe-playwright](https://www.npmjs.com/package/axe-playwright)
+- [Faker.js](https://www.npmjs.com/package/@faker-js/faker)
+- [Lighthouse CI](https://github.com/GoogleCloudPlatform/lighthouse-ci)
 
 ---
 

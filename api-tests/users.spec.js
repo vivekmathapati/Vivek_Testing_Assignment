@@ -5,6 +5,7 @@ const { getUsers } = require('./clients/usersClient');
 const { validUserList } = require('./data/usersData');
 const { userListValidator } = require('./validators/usersValidator');
 const Joi = require('frisby').Joi;
+const { faker } = require('@faker-js/faker');
 
 describe('Reqres API - POST', () => {
     it('should return an error for malformed payload in POST /users', async () => {
@@ -45,6 +46,25 @@ describe('Reqres API - POST', () => {
         console.error(validate.errors);
     }
     });
+});
+
+describe('Reqres API - POST with dynamic data', () => {
+  it('should create a user with random data using POST /users', async () => {
+    const body = {
+      name: faker.name.firstName(),
+      job: faker.name.jobTitle()
+    };
+    const res = await require('./clients/usersClient').postUser(body)
+      .expect('status', 201)
+      .expect('json', 'name', body.name)
+      .expect('json', 'job', body.job)
+      .expect('jsonTypes', {
+        id: Joi.string().required(),
+        createdAt: Joi.string().isoDate().required()
+      });
+    // Optionally, print the created user for debug
+    console.log('Created user:', res.json);
+  });
 });
 
 describe('Reqres API - GET /users With Schema validation', () => {

@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run UI tests (Playwright)
+        run: npx playwright test
+
+      - name: Run API tests (Jest)
+        run: npx jest --coverage
+
+      - name: Run Lighthouse CI
+        run: npm run lhci:run
+
+      - name: Upload Playwright HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+
+      - name: Upload API coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-coverage
+          path: coverage/
+
+      - name: Upload Lighthouse CI report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lhci-report
+          path: lhci-report/
