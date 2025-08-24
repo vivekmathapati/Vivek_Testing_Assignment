@@ -28,7 +28,7 @@ jobs:
         run: npx playwright test
 
       - name: Run API tests (Jest)
-        run: npx jest --coverage
+        run: npx jest api-tests --coverage
 
       - name: Run Lighthouse CI
         run: npm run lhci:run

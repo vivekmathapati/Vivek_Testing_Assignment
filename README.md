@@ -157,7 +157,7 @@ Jest provides built-in code coverage reporting for your API tests.
 
 **Run API tests with coverage:**
 ```sh
-npx jest --coverage
+npx jest api-tests --coverage
 ```
 - This generates a `coverage/` folder with HTML and summary reports.
 - Open `coverage/lcov-report/index.html` in your browser for a detailed report.
