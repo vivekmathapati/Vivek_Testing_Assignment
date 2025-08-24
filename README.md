@@ -15,8 +15,33 @@ This project is a comprehensive test automation framework built with Node.js, su
 - Git (for version control)
 
 ## Installation
+Install all dependencies:
 ```sh
 npm install
+```
+
+### Install Playwright and Browsers
+```sh
+npm install --save-dev @playwright/test
+npx playwright install
+```
+
+### Install Jest, Frisby, and HTML Reporter
+```sh
+npm install --save-dev jest frisby jest-html-reporter
+```
+
+### Install Ajv (for JSON schema validation)
+```sh
+npm install ajv
+```
+
+### Install k6 (system-wide, not via npm)
+Follow instructions at: https://k6.io/docs/getting-started/installation/
+
+### Install k6-html-reporter (for HTML reports from k6)
+```sh
+npm install --save-dev k6-html-reporter
 ```
 
 ## Project Structure
@@ -48,6 +73,7 @@ npx playwright test tests/example.spec.js
 ```sh
 npx playwright show-report
 ```
+This opens the Playwright HTML report in your browser after a test run.
 
 ---
 
@@ -75,7 +101,7 @@ This runs `load-tests/get-users.k6.js` and generates `load-tests/summary.json`.
 ```sh
 npm run k6:report
 ```
-This creates `load-tests/report.html` with a visual summary of the load test.
+This creates `load-tests/report.html` with a visual summary of the load test. Open this file in your browser.
 
 ---
 
