@@ -25,7 +25,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run UI tests (Playwright)
-        run: npx playwright test --grep-invert "Visual regression"
+        run: npx playwright test
 
       - name: Run API tests (Jest)
         run: npx jest --coverage
